@@ -42,7 +42,7 @@ def home():
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
         f"/api/v1.0/start date<br/>"
-        f"/api/v1.0/start date, end date"
+        f"/api/v1.0/start date/end date"
     )
 
 
@@ -67,7 +67,7 @@ def prcp():
 def stations():
     session = Session(engine)
     
-    result = session.query(Station.station).all()
+    result = session.query(Station.station,Station.name,Station.latitude,Station.longitude,Station.elevation).all()
     
     session.close()
     
@@ -77,12 +77,22 @@ def stations():
 @app.route("/api/v1.0/tobs")
 def tob():
     session = Session(engine)
+    
+    sel_2 = [Station.station,Station.name,func.count(Measurement.station)]
+    
+    stations_ranking = session.query(*sel_2).filter(Station.station == Measurement.station).\
+                            group_by(Measurement.station).\
+                            order_by(func.count(Measurement.station).desc()).all()
+    
+    the_most_active_station_id = stations_ranking[0][0]
 
     last_day = session.query(Measurement.date).order_by(Measurement.date.desc()).first()
     first_day = dt.date(2017,8,23) - dt.timedelta(days=365)
 
-    result = session.query(Measurement.date,Measurement.prcp).filter(Measurement.date >= first_day).\
-            order_by(Measurement.date).all()
+    result = session.query(Measurement.date,Measurement.prcp).\
+                filter(Measurement.date >= first_day).\
+                filter(Measurement.station == the_most_active_station_id).\
+                order_by(Measurement.date).all()
     session.close()
     
     return jsonify(result)
