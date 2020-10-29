@@ -61,7 +61,7 @@ Now that I have completed my initial analysis, design a Flask API based on the q
 
 ### Routes
 
-- /
+- `/`
 
 
   - Home page.
@@ -72,7 +72,7 @@ Now that I have completed my initial analysis, design a Flask API based on the q
 
 
 
-- /api/v1.0/precipitation
+- `/api/v1.0/precipitation`
 
 
   - Convert the query results to a dictionary using date as the key and prcp as the value.
@@ -89,7 +89,7 @@ Now that I have completed my initial analysis, design a Flask API based on the q
 
 
 
-- /api/v1.0/tobs
+- `/api/v1.0/tobs`
 
 
   - Query the dates and temperature observations of the most active station for the last year of data.
@@ -100,7 +100,7 @@ Now that I have completed my initial analysis, design a Flask API based on the q
 
 
 
-- /api/v1.0/`<start>` and /api/v1.0/`<start>`/`<end>`
+- `/api/v1.0/<start>` and `/api/v1.0/<start>/<end>`
 
 
   - Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
