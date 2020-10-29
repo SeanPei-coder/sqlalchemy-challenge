@@ -100,7 +100,7 @@ Now that I have completed my initial analysis, design a Flask API based on the q
 
 
 
-- /api/v1.0/start and /api/v1.0/start/end
+- /api/v1.0/`<start>` and /api/v1.0/`<start>`/`<end>`
 
 
   - Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
